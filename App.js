@@ -1,22 +1,23 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, StatusBar, TouchableOpacity } from 'react-native';
-import { Feather } from '@expo/vector-icons'
+import { Feather } from '@expo/vector-icons';
+import Buttons from './src/components/Buttons';
 
 const App = () => {
   const [darkMode, setDarkMode] = useState(false);
-  const buttons = ['AC', 'DEL', '%', '/', 7, 8, 9, '*', 4, 5, 6, '-', 3, 2, 1, '+', 0, '.', '+/-', '='];
 
   const styles = StyleSheet.create({
     container: {
-      paddingTop: StatusBar.currentHeight
+      paddingTop: StatusBar.currentHeight,
+      flex: 1
     },
     result: {
       backgroundColor: darkMode ? '#282f3b' : '#f5f5f5',
       width: '100%',
-      minHeight: 250,
+      height: '35%',
       alignItems: 'flex-end',
       justifyContent: 'flex-end',
-      padding: 10
+      padding: 10,
     },
     resultText: {
       fontSize: 25,
@@ -35,16 +36,30 @@ const App = () => {
     buttons: {
       flexDirection: 'row',
       flexWrap: 'wrap',
+      height: '65%',
+      backgroundColor: !darkMode ? '#555' : '#e5e5e5',
     },
     button: {
       backgroundColor: darkMode ? '#3f4d5b' : '#e5e5e5',
       width: '25%',
-      minHeight: '15.7%',
+      height: '20%',
       alignItems: 'center',
       justifyContent: 'center',
+      borderWidth: 1,
+      borderColor: darkMode ? '#3f4d5b' : '#e5e5e5'
     },
     textButton: {
-      fontSize: 20
+      fontSize: 22,
+      color: darkMode? 'white' : 'black'
+    },
+    numbers: {
+      backgroundColor: darkMode? '#303946' : '#fff'
+    },
+    caracteres: { 
+      backgroundColor: darkMode? '#414853' : '#ededed'
+    },
+    equalSign: {
+      backgroundColor: '#9DBC7B'
     }
   });
 
@@ -62,17 +77,7 @@ const App = () => {
         </TouchableOpacity>
         <Text style={styles.resultText}>3 + 2 = 5</Text>
       </View>
-      <View style={styles.buttons}>
-        {buttons.map(button =>
-          button === '=' ?
-          <TouchableOpacity key={button} style={styles.button}>
-            <Text style={styles.textButton}>{button}</Text>
-          </TouchableOpacity> :
-          <TouchableOpacity key={button} style={styles.button}>
-            <Text style={styles.textButton}>{button}</Text>
-          </TouchableOpacity>
-        )}
-      </View>
+      <Buttons styles={styles}/>
     </View>
   );
 }
