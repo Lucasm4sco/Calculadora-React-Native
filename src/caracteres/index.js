@@ -15,8 +15,8 @@ export const buttons = [
     {caractere: 2, estilo: 'numbers'},
     {caractere: 1, estilo: 'numbers'},
     {caractere:'+', estilo: 'caracteres'},
-    {caractere: 0, estilo: 'numbers'},
     {caractere:'.', estilo: 'caracteres'},
+    {caractere: 0, estilo: 'numbers'}, 
     {caractere:'+/-', estilo: 'caracteres'},
     {caractere:'=', estilo: 'caracteres'},
     ];

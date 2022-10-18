@@ -11,7 +11,7 @@ const Buttons = ({styles, buttonEvent}) => (
                 ...styles.button,
                 ...styles[button.estilo]
                 }}
-            onPress={() => buttonEvent(button.caractere)}
+            onPress={() => buttonEvent(button.caractere, button.estilo)}
                 >
             <Text style={styles.textButton}>
               {button.caractere}

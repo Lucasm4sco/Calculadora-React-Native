@@ -3,10 +3,45 @@ import { StyleSheet, Text, View, StatusBar, TouchableOpacity } from 'react-nativ
 import { Feather } from '@expo/vector-icons';
 import Buttons from './src/components/Buttons';
 
+const addSignal = (text) => {
+  const isFirstValue = !!Number(text);
+  if(isFirstValue) return -Number(text) + '';
+
+  const lastIndexOfPlus = text.lastIndexOf('+');
+  const lastIndexOfTimes = text.lastIndexOf('*');
+  const lastIndexOfMinus = text.lastIndexOf('-');
+  const lastIndexOfMod = text.lastIndexOf('%');
+  const lastIndexOfDivided = text.lastIndexOf('/');
+
+  const lastOperator = Math.max(lastIndexOfPlus, lastIndexOfTimes, lastIndexOfMinus, lastIndexOfMod, lastIndexOfDivided);
+  const existSignal = isNaN(Number(text[lastOperator-1]));
+  
+  if(existSignal) {
+    text = text.substring(0, lastOperator) + -Number(text.substring(lastOperator, text.length));
+  }
+  if(!existSignal) {
+    text = text.substring(0, lastOperator+1) + -Number(text.substring(lastOperator+1, text.length));
+  }
+  return text;
+}
+
+const displayCharacter = (text, textButton, typeButton) => {
+  const isCharacter = typeButton === 'caracteres';
+  const isNumber = typeButton === 'numbers';
+
+  if(text === 'Infinity') return isCharacter ? '0' : textButton + '';
+  if(isNumber && text === '0') return textButton.toString();
+  if(isNumber) return text+textButton;
+  if(isCharacter && text === '') return '0'+textButton;
+  
+  const lastIndex = Number(text[text.length-1]);
+  return isCharacter && isNaN(lastIndex) ? text.substring(0, text.length-1)+textButton : text+textButton;
+}
+
 const App = () => {
   const [darkMode, setDarkMode] = useState(false);
   const [numberHostory, setNumberHistory] = useState('');
-  const [resultText, setResultText] = useState('');
+  const [resultText, setResultText] = useState('0');
 
   const styles = StyleSheet.create({
     container: {
@@ -64,24 +99,27 @@ const App = () => {
     }
   });
 
-  const buttonEvent = useCallback((text) => {
-    switch(text){
+  const buttonEvent = useCallback((textButton, typeButton) => {
+    switch(textButton){
       case 'AC':
         setNumberHistory('');
-        setResultText('');
+        setResultText('0');
         break;
       case 'DEL':
-        setResultText(resultText.substring(0, resultText.length - 1));
+        resultText === 'Infinity' ? 
+          setResultText('0') : setResultText(resultText.substring(0, resultText.length - 1));
         break;
       case '=':
         setNumberHistory(resultText + '=');
-        const result = eval(resultText);
-        result? setResultText(result) : setResultText('0');
+        const avoidError = resultText.replace('\-{2}', '+');  // the eval method charges an error when operating with 2 minus signals
+        const result =  eval(avoidError);
+        result? setResultText(result.toString()) : setResultText('0');
         break;
       case '+/-': 
-        //
+        setResultText(addSignal(resultText));
+        break;
       default:
-        setResultText(resultText+text);
+        setResultText(displayCharacter(resultText, textButton, typeButton))
         break;
     }
   }, [resultText])
