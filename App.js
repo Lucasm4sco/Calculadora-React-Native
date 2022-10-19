@@ -45,13 +45,13 @@ const App = () => {
 
   const styles = StyleSheet.create({
     container: {
-      paddingTop: StatusBar.currentHeight,
       flex: 1
     },
     result: {
+      paddingTop: StatusBar.currentHeight,
       backgroundColor: darkMode ? '#282f3b' : '#f5f5f5',
       width: '100%',
-      height: '35%',
+      height: '40%',
       alignItems: 'flex-end',
       justifyContent: 'flex-end',
       padding: 10,
@@ -73,7 +73,7 @@ const App = () => {
     buttons: {
       flexDirection: 'row',
       flexWrap: 'wrap',
-      height: '65%',
+      height: '60%',
     },
     button: {
       width: '25%',
