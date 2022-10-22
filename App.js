@@ -49,31 +49,36 @@ const App = () => {
     },
     result: {
       paddingTop: StatusBar.currentHeight,
-      backgroundColor: darkMode ? '#282f3b' : '#f5f5f5',
+      backgroundColor: darkMode ? '#222222' : '#f5f5f5',
       width: '100%',
-      height: '40%',
+      height: '45%',
       alignItems: 'flex-end',
       justifyContent: 'flex-end',
       padding: 10,
     },
-    resultText: {
+    numberHostory: {
       fontSize: 25,
-      color: darkMode? 'white' : 'black'
+      color: darkMode? '#ffffffcc' : '#000000cc',
+      marginBottom: 10
+    },
+    resultText: {
+      fontSize: 32,
+      color: darkMode? '#fff' : '#000'
     },
     themeButton: {
-      backgroundColor: darkMode ? '#7b8084' : '#e5e5e5',
+      backgroundColor: darkMode ? '#2e2e2e' : '#e5e5e5',
       alignItems: 'center',
       justifyContent: 'center',
       height: 50,
       width: 50,
       borderRadius: 25,
       alignSelf: 'flex-start',
-      bottom: 120,
+      bottom: '20%',
     },
     buttons: {
       flexDirection: 'row',
       flexWrap: 'wrap',
-      height: '60%',
+      height: '55%',
     },
     button: {
       width: '25%',
@@ -81,20 +86,20 @@ const App = () => {
       alignItems: 'center',
       justifyContent: 'center',
       borderWidth: 1,
-      borderColor: darkMode ? '#3f4d5b' : '#e5e5e5'
+      borderColor: darkMode ? '#3a3939' : '#e5e5e5'
     },
     textButton: {
       fontSize: 22,
       color: darkMode? '#f5f5f5' : 'black'
     },
     numbers: {
-      backgroundColor: darkMode? '#303946' : '#fff'
+      backgroundColor: darkMode? '#1b1b1b' : '#fff'
     },
     caracteres: { 
-      backgroundColor: darkMode? '#414853' : '#ededed'
+      backgroundColor: darkMode? '#2b2b2b' : '#ededed'
     },
     equalSign: {
-      backgroundColor: '#9DBC7B',
+      backgroundColor: darkMode? '#426024' : '#9DBC7B',
       color: '#fff'
     }
   });
@@ -111,8 +116,9 @@ const App = () => {
         break;
       case '=':
         setNumberHistory(resultText + '=');
-        const avoidError = resultText.replace('\-{2}', '+');  // the eval method charges an error when operating with 2 minus signals
-        const result =  eval(avoidError);
+        const avoidError = resultText.replace('\-{2}', '+');  // the eval method charges an error when operating with 2 minus signals;
+        const formattedString = avoidError.replace('\^', '**');
+        const result =  eval(formattedString);
         result? setResultText(result.toString()) : setResultText('0');
         break;
       case '+/-': 
